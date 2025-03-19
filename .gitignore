@@ -1,3 +1,5 @@
 **/__pycache__/**
 **/logs/**
 LS_BRT_v1_w1.25.npy
+best_classifier_0_01.pt
+best_pretrain_joint_0_10.pt

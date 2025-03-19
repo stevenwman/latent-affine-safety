@@ -1,0 +1,15 @@
+configargparse==1.7
+ruamel-yaml==0.17.4
+box2d-py==2.3.8 # needs swig
+numpy
+torch
+torchvision 
+torchaudio
+gym
+scipy
+matplotlib
+shapely==1.7.1
+termcolor
+tools
+tensorboard
+tqdm

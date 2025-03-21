@@ -107,11 +107,7 @@ def RARL(config):
       stateDim = config.dyn_stoch + config.dyn_deter
   actionNum = env.action_space.n
   actionList = np.arange(actionNum)
-  print(
-      "State Dimension: {:d}, ActionSpace Dimension: {:d}".format(
-          stateDim, actionNum
-      )
-  )
+  print("State Dimension: {:d}, ActionSpace Dimension: {:d}".format(stateDim, actionNum))
 
   # == Setting in this Environment ==
   env.set_speed(speed=config.speed)
@@ -164,8 +160,7 @@ def RARL(config):
     x_lin = xs[idxs[:,0]]
     y_lin = ys[idxs[:,1]]
     theta_lin = np.array(thetas)
-    
-      
+
     g_x, _, _ = env.car.get_latent(x_lin, y_lin, theta_lin, imgs)
 
 
@@ -301,90 +296,41 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     # environment parameters
-    parser.add_argument(
-        "-dt", "--doneType", help="when to raise done flag", default='toEnd',
-        type=str
-    )
-    parser.add_argument(
-        "-ct", "--costType", help="cost type", default='sparse', type=str
-    )
-    parser.add_argument(
-        "-rnd", "--randomSeed", help="random seed", default=0, type=int
-    )
+    parser.add_argument("-dt", "--doneType", help="when to raise done flag", default='toEnd',type=str)
+    parser.add_argument("-ct", "--costType", help="cost type", default='sparse', type=str)
+    parser.add_argument("-rnd", "--randomSeed", help="random seed", default=0, type=int)
 
     # car dynamics
-    parser.add_argument(
-        "-cr", "--consRadius", help="constraint radius", default=0.5, type=float
-    )
-
-    parser.add_argument(
-        "-turn", "--turnRate", help="turning rate", default=1.25, type=float
-    )
-    parser.add_argument(
-        "--dt", help="timestep", default=0.05, type=float
-    )
+    parser.add_argument("-cr", "--consRadius", help="constraint radius", default=0.5, type=float)
+    parser.add_argument("-turn", "--turnRate", help="turning rate", default=1.25, type=float)
+    parser.add_argument("--dt", help="timestep", default=0.05, type=float)
     parser.add_argument("-s", "--speed", help="speed", default=1., type=float)
 
     # training scheme
-    parser.add_argument(
-        "-w", "--warmup", help="warmup Q-network", action="store_true"
-    )
-    parser.add_argument(
-        "-wi", "--warmupIter", help="warmup iteration", default=10000, type=int
-    )
-    parser.add_argument(
-        "-mu", "--maxUpdates", help="maximal #gradient updates", default=400000,
-        type=int
-    )
-    parser.add_argument(
-        "-ut", "--updateTimes", help="#hyper-param. steps", default=20, type=int
-    )
-    parser.add_argument(
-        "-mc", "--memoryCapacity", help="memoryCapacity", default=10000, type=int
-    )
-    parser.add_argument(
-        "-cp", "--checkPeriod", help="check period", default=10000, type=int
-    )
+    parser.add_argument("-w", "--warmup", help="warmup Q-network", action="store_true")
+    parser.add_argument("-wi", "--warmupIter", help="warmup iteration", default=10000, type=int)
+    parser.add_argument("-mu", "--maxUpdates", help="maximal #gradient updates", default=400000,type=int)
+    parser.add_argument("-ut", "--updateTimes", help="#hyper-param. steps", default=20, type=int)
+    parser.add_argument("-mc", "--memoryCapacity", help="memoryCapacity", default=10000, type=int)
+    parser.add_argument("-cp", "--checkPeriod", help="check period", default=10000, type=int)
 
     # hyper-parameters
-    parser.add_argument(
-        "-a", "--annealing", help="gamma annealing", action="store_true"
-    )
-    parser.add_argument(
-        "-arc", "--architecture", help="NN architecture", default=[100, 100],
-        nargs="*", type=int
-    )
-    parser.add_argument(
-        "-lr", "--learningRate", help="learning rate", default=1e-3, type=float
-    )
-    parser.add_argument(
-        "-g", "--gamma", help="contraction coeff.", default=0.9999, type=float
-    )
-    parser.add_argument(
-        "-act", "--actType", help="activation type", default='Tanh', type=str
-    )
+    parser.add_argument("-a", "--annealing", help="gamma annealing", action="store_true")
+    parser.add_argument("-arc", "--architecture", help="NN architecture", default=[100, 100],nargs="*", type=int)
+    parser.add_argument("-lr", "--learningRate", help="learning rate", default=1e-3, type=float)
+    parser.add_argument("-g", "--gamma", help="contraction coeff.", default=0.9999, type=float)
+    parser.add_argument("-act", "--actType", help="activation type", default='Tanh', type=str)
 
     # RL type
     parser.add_argument("-m", "--mode", help="mode", default='RA', type=str)
-    parser.add_argument(
-        "-tt", "--terminalType", help="terminal value", default='g', type=str
-    )
+    parser.add_argument("-tt", "--terminalType", help="terminal value", default='g', type=str)
 
     # file
-    parser.add_argument(
-        "-st", "--showTime", help="show timestr", action="store_true"
-    )
+    parser.add_argument("-st", "--showTime", help="show timestr", action="store_true")
     parser.add_argument("-n", "--name", help="extra name", default='', type=str)
-    parser.add_argument(
-        "-of", "--outFolder", help="output file", default='experiments', type=str
-    )
-    parser.add_argument(
-        "-pf", "--plotFigure", help="plot figures", action="store_true"
-    )
-    parser.add_argument(
-        "-sf", "--storeFigure", help="store figures", action="store_true"
-    )
-
+    parser.add_argument("-of", "--outFolder", help="output file", default='experiments', type=str)
+    parser.add_argument("-pf", "--plotFigure", help="plot figures", action="store_true")
+    parser.add_argument("-sf", "--storeFigure", help="store figures", action="store_true")
     parser.add_argument("--configs", nargs="+")
     parser.add_argument("--expt_name", type=str, default=None)
     parser.add_argument("--resume_run", type=bool, default=False)

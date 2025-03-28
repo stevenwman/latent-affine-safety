@@ -1,0 +1,23 @@
+Create envs.
+Action Space Box(-1.25, 1.25, (1,), float32)
+OrderedDict()
+Traceback (most recent call last):                                
+[1m[35mLoading expert buffer with 1900 trajectories from /home/clown2/Desktop/Work/Courses/EAIS/wm_demos_cont_act128.pkl[0m
+[1m[35mLoading validation buffer with 3100[0m
+1900
+3100
+Simulate agent.
+Encoder CNN shapes: {'image': (128, 128, 3)}
+Encoder MLP shapes: {'obs_state': (2,)}
+Decoder CNN shapes: {'image': (128, 128, 3)}
+Decoder MLP shapes: {'obs_state': (2,)}
+Optimizer model_opt has 27133189 variables.
+Optimizer actor_opt has 543746 variables.
+Optimizer value_opt has 673535 variables.
+  File "eais_hw2/dreamerv3-torch/dreamer_offline.py", line 763, in <module>
+    main(parser.parse_args(remaining))
+  File "eais_hw2/dreamerv3-torch/dreamer_offline.py", line 595, in main
+    expert_dataset,
+  File "eais_hw2/dreamerv3-torch/dreamer_offline.py", line 58, in __init__
+    self._wm = torch.compile(self._wm)
+AttributeError: module 'torch' has no attribute 'compile'

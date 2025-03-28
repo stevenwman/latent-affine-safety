@@ -539,7 +539,11 @@ def main(config):
 
     print("Create envs.")
     
-    action_space = gym.spaces.Discrete(3)
+    # action_space = gym.spaces.Discrete(3)
+    u_max = config.turnRate
+    action_space = gym.spaces.Box(
+        low=-u_max, high=u_max, shape=(1,), dtype=np.float32
+    )
 
     bounds = np.array([[config.x_min, config.x_max], [config.y_min, config.y_max], [0, 2 * np.pi]])
     low = bounds[:, 0]
@@ -688,7 +692,7 @@ def main(config):
     if total_pretrain_steps > 0:
         
         cprint(
-            f"Pretraining for {config.pretrain_steps=}",
+            f"Pretraining for {config.pretrain_steps}",
             color="cyan",
             attrs=["bold"],
         )
@@ -738,7 +742,7 @@ if __name__ == "__main__":
 
     yaml = yaml.YAML(typ="safe", pure=True)
     configs = yaml.load(
-        (pathlib.Path(sys.argv[0]).parent / "../configs.yaml").read_text()
+        (pathlib.Path(sys.argv[0]).parent / "configs.yaml").read_text()
     )
 
     def recursive_update(base, update):

@@ -196,7 +196,8 @@ def save_checkpoint(
 
 def fill_expert_dataset_dubins(config, cache, is_val_set=False):
     # the DDQN version of the Dubins example
-    dataset_path = '/home/kensuke/eais_hw2/wm_demos128.pkl'
+    # dataset_path = '/home/kensuke/eais_hw2/wm_demos128.pkl'
+    dataset_path = '/home/clown2/Desktop/Work/Courses/EAIS/wm_demos_cont_act128.pkl'
     
     with open(dataset_path, 'rb') as f:
         demos = pickle.load(f)
@@ -243,14 +244,16 @@ def fill_expert_dataset_dubins(config, cache, is_val_set=False):
             transition["is_last"] = np.array(traj["dones"][t], dtype=np.bool_)
             transition["is_terminal"] = np.array(traj["dones"][t], dtype=np.bool_)
             transition["discount"] = np.array(1, dtype=np.float32)
-            if traj["actions"][t] < 0: # umin
-                traj["actions"][t] = [1, 0, 0]
-            elif traj["actions"][t] == 0: # zero
-                traj["actions"][t] = [0, 1, 0]
-            else:   # umax
-                traj["actions"][t] = [0, 0, 1]
-        
-            transition["action"] = np.array(traj["actions"][t], dtype=np.uint8)
+            # if traj["actions"][t] < 0: # umin
+            #     traj["actions"][t] = [1, 0, 0]
+            # elif traj["actions"][t] == 0: # zero
+            #     traj["actions"][t] = [0, 1, 0]
+            # else:   # umax
+            #     traj["actions"][t] = [0, 0, 1]
+
+            # take in action straight from the dataset
+            # transition["action"] = np.array(traj["actions"][t], dtype=np.uint8)
+            transition["action"] = np.array(traj["actions"][t], dtype=np.float32)
             
             add_to_cache(cache, f"exp_traj_{i}", transition)
     if not is_val_set:

@@ -49,7 +49,7 @@ class WorldModel(nn.Module):
             config.dyn_min_std,
             config.unimix_ratio,
             config.initial,
-            config.num_actions,
+            config.num_actions, 
             self.embed_size,
             config.device,
         )

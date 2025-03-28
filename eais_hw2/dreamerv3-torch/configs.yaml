@@ -145,7 +145,7 @@ defaults:
 
   # Dubins car parameters
   turnRate: 1.25
-  num_actions: 3
+  # num_actions: 3
 
   gamma_lx: 0.75
 

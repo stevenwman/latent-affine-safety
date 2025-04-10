@@ -611,6 +611,7 @@ def main(config):
         plot = Image.open(buf).convert("RGB")
         plot_arr = np.array(plot)
         logger.image("pretrain/" + title, np.transpose(plot_arr, (2, 0, 1)))
+
     def eval_obs_recon():
         recon_steps = 101
         obs_mlp, obs_opt = agent._wm._init_obs_mlp(config, 3)
@@ -634,6 +635,7 @@ def main(config):
         logger.write(step=logger.step)
         del obs_mlp, obs_opt  # dont need to keep these
         return np.min(eval_loss)
+    
     def train_lx(ckpt_name, log_dir):
         recon_steps = 2501
         best_pretrain_success_classifier = float("inf")
@@ -666,6 +668,7 @@ def main(config):
         print(eval_loss)
         print('logged')
         return lx_mlp, lx_opt
+    
     def evaluate(other_dataset=None, eval_prefix=""):
         agent.eval()
         
@@ -686,6 +689,7 @@ def main(config):
 
         agent.train()
         return recon_eval, recon_eval
+    
     # ==================== Actor Pretrain ====================
     total_pretrain_steps = config.pretrain_steps 
     print(total_pretrain_steps)

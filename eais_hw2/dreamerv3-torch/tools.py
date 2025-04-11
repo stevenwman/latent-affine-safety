@@ -210,6 +210,9 @@ def fill_expert_dataset_dubins(config, cache, is_val_set=False):
     pixel_keys = sorted(['image'])
     state_keys = sorted(['state'])
 
+    # import pdb; pdb.set_trace()
+
+
     for i, demo in tqdm(
         enumerate(demos),
         desc="Loading in expert data",
@@ -217,10 +220,11 @@ def fill_expert_dataset_dubins(config, cache, is_val_set=False):
         leave=False,
         total=len(demos),
     ):
-        if i < num_train and is_val_set:
+        if i < num_val and is_val_set:
             continue
-        elif i >= num_train and not is_val_set:
+        elif i >= num_val and not is_val_set:
             break
+        
         traj = demo
         for t in range(len(traj["obs"][pixel_keys[0]])):
             transition = defaultdict(np.array)

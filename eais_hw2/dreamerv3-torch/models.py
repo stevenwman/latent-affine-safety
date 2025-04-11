@@ -86,6 +86,7 @@ class WorldModel(nn.Module):
             name="Cont",
         )
         for name in config.grad_heads:
+            print(name)
             assert name in self.heads, name
         self._model_opt = tools.Optimizer(
             "model",

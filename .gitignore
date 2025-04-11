@@ -7,3 +7,5 @@ LS_BRT_v1_w1.25.npy
 
 **/*.egg-info
 **/experiment_script/**
+
+dreamer_l2_lessrand/

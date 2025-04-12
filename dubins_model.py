@@ -45,7 +45,7 @@ class Dubins3D(dynamics.ControlAndDisturbanceAffineDynamics):
         x_dot = self.speed*torch.cos(state[:, 2])
         y_dot = self.speed*torch.sin(state[:, 2])
         theta_dot = action[:, 0]
-        return torch.stack([y_dot, x_dot, theta_dot], dim=1)
+        return torch.stack([x_dot, y_dot, theta_dot], dim=1)
 
     def discrete_rk4(self, current_state: torch.Tensor, action: torch.Tensor, dt: float) \
         -> torch.Tensor:
@@ -65,3 +65,9 @@ class Dubins3D(dynamics.ControlAndDisturbanceAffineDynamics):
         next_state[..., -1] = next_state[..., -1] % (2 * np.pi)
         return next_state
 
+    def state_error(self, state_1, state_2):
+        error = state_1 - state_2
+        error[2] = error[2] % (2 * np.pi)
+        if error[2] > np.pi:
+            error[2] -= 2*np.pi
+        return error

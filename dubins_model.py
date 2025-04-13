@@ -62,7 +62,7 @@ class Dubins3D(dynamics.ControlAndDisturbanceAffineDynamics):
         k4 = self.continuous_dynamics(end_state_k4, action)
         # Combine k1, k2, k3, k4 to compute the next state
         next_state = current_state + (dt / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4)
-        next_state[..., -1] = next_state[..., -1] % (2 * np.pi)
+        # next_state[..., -1] = next_state[..., -1] % (2 * np.pi)
         return next_state
 
     def state_error(self, state_1, state_2):

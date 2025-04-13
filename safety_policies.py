@@ -8,3 +8,4 @@ def safety_filter(action, vfunc, vgrad, state, u_max, eps):
         else:
             action = u_max
     return action
+

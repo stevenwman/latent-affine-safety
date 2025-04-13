@@ -3,6 +3,7 @@ from hj_reachability import dynamics
 from hj_reachability import sets
 import numpy as np
 import torch
+import jax
 
 class HJValueFunction():
     def __init__(self,
@@ -68,8 +69,7 @@ class HJValueFunction():
         c1 = c01 * (1 - y_weight) + c11 * y_weight
 
         interpolated_value = c0 * (1 - z_weight) + c1 * z_weight
-        return float(interpolated_value)
-
+        return float(interpolated_value)    
 
     def theta_to_grid(self, theta):
         return int(np.floor((self.num_cells[2] - 1) * np.clip((theta - self.grid_min[2]) / (self.grid_max[2] - self.grid_min[2]), 0, 1)))

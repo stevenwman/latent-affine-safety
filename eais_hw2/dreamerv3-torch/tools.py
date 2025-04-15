@@ -194,11 +194,17 @@ def save_checkpoint(
 
     return best_score
 
-def fill_expert_dataset_dubins(config, cache, is_val_set=False):
+def fill_expert_dataset_dubins(config, cache, is_val_set=False, pkl_path=None):
     # the DDQN version of the Dubins example
     # dataset_path = '/home/kensuke/eais_hw2/wm_demos128.pkl'
-    dataset_path = '/home/clown2/Desktop/Work/Courses/EAIS/wm_demos_cont_act128.pkl'
     
+    if pkl_path is None:
+        dataset_path = '/home/clown2/Desktop/Work/Courses/EAIS/wm_demos_cont_act128.pkl'
+    else:
+        dataset_path = pkl_path
+    
+    print(f"Loading dataset from {dataset_path}")
+
     with open(dataset_path, 'rb') as f:
         demos = pickle.load(f)
         

@@ -49,3 +49,8 @@ def sampling_filter(nominal_action, vfunc, vgrad, state, u_max, eps, dubins, dt,
                 return possible_actions[i, 0]
     else:
         return nominal_action
+
+def sampling_filter(nominal_action, vfunc, state, u_max, eps, num_samples):
+    safety_V = vfunc(state)
+    if safety_V <= eps:
+        possible_actions = torch.linspace(-u_max, u_max)

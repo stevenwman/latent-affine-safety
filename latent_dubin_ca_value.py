@@ -1,3 +1,7 @@
+import sys
+
+sys.path.append("PytorchReachability")
+
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import io
@@ -13,20 +17,21 @@ from PyHJ.utils.net.continuous import Actor, Critic
 from PyHJ.policy import avoid_DDPGPolicy_annealing as DDPGPolicy
 import pathlib
 import argparse
-import sys
+from pathlib import Path
+
 import gym
 
 # replace these accordingly
-parent_dir = "/home/clown2/Desktop/Work/Courses/EAIS/"
-dreamer_dir = "/home/clown2/Desktop/Work/Courses/EAIS/eais_hw2/dreamerv3-torch"
-ckpt_path = '/home/clown2/Desktop/Work/Courses/EAIS/logs/dreamer_dubins/best_pretrain_joint_0_12.pt'
-policy_path = ("dreamer_l2_lessrand/lcrl/0411/142538/lcrl/dubins-wm/"
-                "wm_actor_activation_ReLU_critic_activation_ReLU_game_"
-                "gd_steps_1_tau_0.005_training_num_1_buffer_size_40000"
-                "_c_net_512_4_a1_512_4_a2_512_4_gamma_0.95/noise_0.1_"
-                "actor_lr_0.0001_critic_lr_0.001_batch_512_step_per_"
-                "epoch_40000_kwargs_{}_seed_0/epoch_id_40/policy.pth")
-HJconfig_path = "/home/clown2/Desktop/Work/Courses/EAIS/PytorchReachability/HJconfig.yaml"
+dreamer_dir = str(Path(__file__).resolve().parent) + "/eais_hw2/dreamerv3-torch"
+ckpt_path = str(Path(__file__).resolve().parent) + "/eais_hw2/best_pretrain_joint_0_12.pt"
+policy_path = str(Path(__file__).resolve().parent) + "/eais_hw2/policy.pth"
+# policy_path = ("dreamer_l2_lessrand/lcrl/0411/142538/lcrl/dubins-wm/"
+#                 "wm_actor_activation_ReLU_critic_activation_ReLU_game_"
+#                 "gd_steps_1_tau_0.005_training_num_1_buffer_size_40000"
+#                 "_c_net_512_4_a1_512_4_a2_512_4_gamma_0.95/noise_0.1_"
+#                 "actor_lr_0.0001_critic_lr_0.001_batch_512_step_per_"
+#                 "epoch_40000_kwargs_{}_seed_0/epoch_id_40/policy.pth")
+HJconfig_path = str(Path(__file__).resolve().parent) + "/eais_hw2/HJconfig.yaml"
 
 sys.path.append(parent_dir)
 sys.path.append(dreamer_dir)
@@ -310,11 +315,11 @@ class latent_dubin_ca_value:
         value = self.evaluate_V(feat)
         act = self.find_a(feat)
         pr_state = proc_data['privileged_state'][0,0].cpu()
-        print("privileged state: ", pr_state)
-        print("safe action: ", act)
-        print("safe value: ", value)
+        # print("privileged state: ", pr_state)
+        # print("safe action: ", act)
+        # print("safe value: ", value)    
 
-    
+        return value
 
 def main():
     s_curr = np.array([[0., 0., 0.],[0.1, 0., 0.],[0.,0.,0.]])

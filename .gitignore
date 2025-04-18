@@ -4,6 +4,7 @@ LS_BRT_v1_w1.25.npy
 **/*.pt
 **/*.pkl
 **/wandb
+wandb/**
 
 **/*.egg-info
 **/experiment_script/**

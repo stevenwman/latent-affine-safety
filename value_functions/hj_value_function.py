@@ -18,7 +18,11 @@ class HJValueFunction():
         self.grid = hj.Grid.from_lattice_parameters_and_boundary_conditions(hj.sets.Box(grid_min, grid_max),
                                                                num_cells,
                                                                periodic_dims=2)
-        self.grid_res = np.array([self.grid_max[0] - self.grid_min[0], self.grid_max[1] - self.grid_min[1], self.grid_max[2] - self.grid_min[2]]) / np.array([self.num_cells[0] - 1, self.num_cells[1] - 1, self.num_cells[2]])
+        self.grid_res = np.array([self.grid_max[0] - self.grid_min[0], 
+                                  self.grid_max[1] - self.grid_min[1], 
+                                  self.grid_max[2] - self.grid_min[2]]) / np.array([self.num_cells[0] - 1, 
+                                                                                    self.num_cells[1] - 1, 
+                                                                                    self.num_cells[2]])
 
         self.solver_settings = hj.SolverSettings.with_accuracy("very_high",
                                                   hamiltonian_postprocessor=hj.solver.backwards_reachable_tube)

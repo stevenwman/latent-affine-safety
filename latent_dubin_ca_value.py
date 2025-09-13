@@ -22,6 +22,7 @@ from pathlib import Path
 import gym
 
 # replace these accordingly
+parent_dir = "."
 dreamer_dir = str(Path(__file__).resolve().parent) + "/eais_hw2/dreamerv3-torch"
 ckpt_path = str(Path(__file__).resolve().parent) + "/eais_hw2/best_pretrain_joint_0_12.pt"
 policy_path = str(Path(__file__).resolve().parent) + "/eais_hw2/policy.pth"
@@ -109,6 +110,7 @@ class latent_dubin_ca_value:
         state_obs, img_obs, state_gt, dones, acs = ([] for _ in range(5))
         
         for i in range(s0.shape[0]):
+            # print(i, " ", s0.shape[0])
             s = s0[i]
             ac = 0 * torch.rand(1)
             state_obs.append(s[2].numpy()) # get to observe theta
@@ -296,6 +298,24 @@ class latent_dubin_ca_value:
 
         self.wm = wm
         self.policy = policy
+
+    def state_action_to_V(self, state, action):
+        data_pts = self.state_to_data(state)
+        traj = self.demo_to_traj(data_pts)
+
+        bs = traj['state'].shape[0] # batch size
+        is_first = torch.ones((bs,1), device='cuda:0')
+
+        proc_data = self.wm.preprocess(traj)
+        latent,_ = self.wm.dynamics.observe(self.wm.encoder(proc_data), action, is_first)
+        # latent['stoch'] = latent['mean']
+        for k, v in latent.items(): latent[k] = v[:, [-1]]
+        feat = self.wm.dynamics.get_feat(latent).detach().cpu().numpy() 
+        value = self.evaluate_V(feat)
+        act = self.find_a(feat)
+        pr_state = proc_data['privileged_state'][0,0].cpu()
+
+        return value
 
     def state_to_V(self, state):
         s_curr = state

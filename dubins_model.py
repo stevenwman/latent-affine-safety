@@ -7,12 +7,13 @@ import torch
 
 class Dubins3D(dynamics.ControlAndDisturbanceAffineDynamics):
     def __init__(self,
-                 max_turn_rate=1.,
+                 max_turn_rate=1.25,
                  control_mode="max",
                  disturbance_mode="min",
                  control_space=None,
                  disturbance_space=None,
-                 speed = 0.5):
+                 speed = 1.0):
+        self.max_turn_rate = max_turn_rate
         self.speed = speed
         if control_space is None:
             control_space = sets.Box(jnp.array([-max_turn_rate]), jnp.array([max_turn_rate]))
@@ -47,8 +48,10 @@ class Dubins3D(dynamics.ControlAndDisturbanceAffineDynamics):
         theta_dot = action[:, 0]
         return torch.stack([x_dot, y_dot, theta_dot], dim=1)
 
-    def discrete_rk4(self, current_state: torch.Tensor, action: torch.Tensor, dt: float) \
+    def discrete_dynamics(self, current_state: torch.Tensor, action: torch.Tensor, dt: float) \
         -> torch.Tensor:
+
+        return current_state + dt * self.continuous_dynamics(current_state, action)
         # k1
         k1 = self.continuous_dynamics(current_state, action)
         # k2
